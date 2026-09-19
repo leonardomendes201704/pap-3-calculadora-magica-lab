@@ -26,9 +26,15 @@ npx --yes serve -p 8080
 | `styles.css`  | Tokens PAP-5, layout, feedback  |
 | `app.js`      | Lógica +, −, ×, ÷, C, =         |
 
-## Publicação (Release)
+## Publicação (GitHub Pages — lab)
 
-Publicar o conteúdo desta pasta como site estático (ex.: GitHub Pages na raiz ou subpasta). Ponto de entrada: **`index.html`**.
+Repositório: **https://github.com/leonardomendes201704/pap-calculadora-magica**
+
+Site público (HTTPS, ambiente **LAB/staging** — badge na página):
+
+**https://leonardomendes201704.github.io/pap-calculadora-magica/**
+
+Deploy: branch `main`, pasta raiz (`/`), GitHub Actions workflow `pages` (static HTML, sem build). Ponto de entrada: `index.html`.
 
 ## Comportamento
 
