@@ -28,13 +28,15 @@ npx --yes serve -p 8080
 
 ## Publicação (GitHub Pages — lab)
 
-Repositório: **https://github.com/leonardomendes201704/pap-calculadora-magica**
+Repositório canônico: **https://github.com/leonardomendes201704/pap-3-calculadora-magica-lab**
 
-Site público (HTTPS, ambiente **LAB/staging** — badge na página):
+URL HTTPS planejada (após habilitar Pages em Settings → Pages, branch `main`, pasta `/`):
 
-**https://leonardomendes201704.github.io/pap-calculadora-magica/**
+**https://leonardomendes201704.github.io/pap-3-calculadora-magica-lab/**
 
-Deploy: branch `main`, pasta raiz (`/`), GitHub Actions workflow `pages` (static HTML, sem build). Ponto de entrada: `index.html`.
+Ambiente **LAB/staging** (badge na UI). Site estático na raiz do repo — sem build. Entrada: `index.html`.
+
+> Release (PAP-8): código FE em `main`; falta grant/scopes para `POST /pages` via API — ver [PAP-11](/PAP/issues/PAP-11).
 
 ## Comportamento
 
