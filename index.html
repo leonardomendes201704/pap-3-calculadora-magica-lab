@@ -14,7 +14,58 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="app">
+    <div
+      class="splash"
+      id="splash"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="splash-title"
+      aria-describedby="splash-desc"
+    >
+      <div class="splash__scene" aria-hidden="true">
+        <svg class="splash__art" viewBox="0 0 320 240" width="280" height="210" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="160" cy="200" rx="120" ry="18" fill="#c8e6f5" opacity="0.6" />
+          <g class="splash__cloud">
+            <ellipse cx="100" cy="120" rx="42" ry="32" fill="#fff" />
+            <ellipse cx="135" cy="108" rx="48" ry="36" fill="#fff" />
+            <ellipse cx="175" cy="118" rx="44" ry="34" fill="#fff" />
+            <ellipse cx="140" cy="132" rx="70" ry="28" fill="#fff" />
+            <circle cx="118" cy="118" r="5" fill="#4a5568" />
+            <circle cx="158" cy="118" r="5" fill="#4a5568" />
+            <path d="M125 132 Q138 142 151 132" fill="none" stroke="#f687b3" stroke-width="3" stroke-linecap="round" />
+            <ellipse cx="108" cy="126" rx="8" ry="5" fill="#ffd6e8" opacity="0.7" />
+            <ellipse cx="168" cy="126" rx="8" ry="5" fill="#ffd6e8" opacity="0.7" />
+          </g>
+          <g class="splash__star">
+            <path
+              d="M248 72 L254 88 L270 88 L258 98 L264 114 L248 104 L232 114 L238 98 L226 88 L242 88 Z"
+              fill="#ffe066"
+              stroke="#f6ad55"
+              stroke-width="2"
+              stroke-linejoin="round"
+            />
+            <circle cx="248" cy="92" r="3" fill="#4a5568" />
+            <path d="M244 98 Q248 101 252 98" fill="none" stroke="#f687b3" stroke-width="2" stroke-linecap="round" />
+          </g>
+          <g class="splash__buddy">
+            <rect x="52" y="148" width="56" height="44" rx="12" fill="#a8e6cf" stroke="#68d391" stroke-width="2" />
+            <text x="80" y="178" text-anchor="middle" font-family="Nunito, sans-serif" font-size="22" font-weight="800" fill="#276749">+</text>
+            <circle cx="68" cy="162" r="4" fill="#2d3748" />
+            <circle cx="92" cy="162" r="4" fill="#2d3748" />
+            <path d="M70 172 Q80 178 90 172" fill="none" stroke="#f687b3" stroke-width="2" stroke-linecap="round" />
+          </g>
+        </svg>
+      </div>
+      <h2 class="splash__title" id="splash-title">Calculadora Mágica</h2>
+      <p class="splash__desc" id="splash-desc">Preparando a magia…</p>
+      <div class="splash__dots" aria-hidden="true">
+        <span class="splash__dot"></span>
+        <span class="splash__dot"></span>
+        <span class="splash__dot"></span>
+      </div>
+    </div>
+
+    <main class="app app--splash-hidden" id="app-main" inert>
       <div class="calc" id="calculator" data-feedback="none" aria-label="Calculadora">
         <header class="calc__header">
           <p class="calc__env-badge" aria-label="Ambiente de laboratório">LAB / staging</p>

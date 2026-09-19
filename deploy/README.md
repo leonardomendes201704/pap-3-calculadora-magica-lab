@@ -15,37 +15,50 @@ Sem build. Publicar estes arquivos na raiz do site:
 
 Origem canônica: branch `main` de [pap-3-calculadora-magica-lab](https://github.com/leonardomendes201704/pap-3-calculadora-magica-lab).
 
+## VPS company (descoberta day-0)
+
+| Item | Valor |
+|------|--------|
+| Caddy | Container `deploy-caddy-1` (`/opt/instaads/deploy/Caddyfile`) |
+| TLS | Let's Encrypt (já ativo em `preview.insta-ads.online`) |
+| Site root lab | `/srv/lm-studios/previews/pap-3-calculadora-magica-lab/` |
+| **URL HTTPS lab** | **https://preview.insta-ads.online/pap-3-calculadora-magica-lab/** |
+
+O bloco `preview.insta-ads.online` já faz `file_server` em `/srv/lm-studios/previews` — **não é obrigatório** editar o Caddyfile para o caminho padrão (mesmo padrão que `qa-test`).
+
+**Governança:** aguardar aprovação [Plano B](/PAP/approvals/ff57d1d9-5bab-49b9-88c7-8b413e4a1eb0) em [PAP-11](/PAP/issues/PAP-11) antes de gravar em `/srv/lm-studios/previews`.
+
 ## Sincronizar para a VPS
 
-Exemplo (ajustar host e caminho):
+Na VPS, como usuário `paperclip`, a partir da raiz do repo:
 
 ```bash
-export VPS=user@lab-vps.example
-export SITE_ROOT=/var/www/pap-3-calculadora-lab
-
-rsync -avz --delete \
-  ./index.html ./styles.css ./app.js \
-  "$VPS:$SITE_ROOT/"
+bash deploy/deploy-static.sh
 ```
 
-Ou `git clone` / `git pull` no `$SITE_ROOT` se o CTO preferir deploy por git na VPS.
-
-## Caddy
-
-1. Copiar `Caddyfile.example` para o path usado na VPS.
-2. Definir variáveis de ambiente (systemd drop-in ou `/etc/caddy/env`):
-
-   - `LAB_HOST` — hostname público (ex. `calculadora-lab.example.com`)
-   - `SITE_ROOT` — diretório com os três arquivos estáticos
-
-3. Validar e recarregar:
+Se o agente roda como `company` (sem `runuser`), cópia equivalente via Docker:
 
 ```bash
-caddy validate --config /etc/caddy/Caddyfile
-systemctl reload caddy
+docker run --rm \
+  -v /srv/lm-studios/previews:/previews \
+  -v "$(pwd):/src:ro" alpine:3.20 sh -c \
+  'mkdir -p /previews/pap-3-calculadora-magica-lab && cp /src/index.html /src/styles.css /src/app.js /previews/pap-3-calculadora-magica-lab/ && chown -R 999:982 /previews/pap-3-calculadora-magica-lab'
 ```
 
-Caddy obtém certificado TLS (Let's Encrypt) automaticamente quando `LAB_HOST` resolve para a VPS.
+Alternativa remota (`rsync`):
+
+```bash
+export VPS=paperclip@srv1956148.hstgr.cloud
+export SITE_ROOT=/srv/lm-studios/previews/pap-3-calculadora-magica-lab
+rsync -avz ./index.html ./styles.css ./app.js "$VPS:$SITE_ROOT/"
+```
+
+## Caddy (hostname dedicado — opcional)
+
+1. Copiar `Caddyfile.example` ou adicionar bloco em `/opt/instaads/deploy/Caddyfile`.
+2. DNS `LAB_HOST` → VPS; recarregar: `docker compose -f /opt/instaads/deploy/docker-compose.yml exec caddy caddy reload --config /etc/caddy/Caddyfile`
+
+Para systemd Caddy standalone, use `caddy validate` + `systemctl reload caddy` conforme `Caddyfile.example`.
 
 ## Verificação
 
@@ -55,7 +68,11 @@ Caddy obtém certificado TLS (Let's Encrypt) automaticamente quando `LAB_HOST` r
 
 ## Rollback
 
-Manter cópia anterior do `$SITE_ROOT` ou checkout git anterior; `rsync` com snapshot ou `git revert` + reload Caddy. Documentar tag/commit em comentário na issue de deploy.
+```bash
+rm -rf /srv/lm-studios/previews/pap-3-calculadora-magica-lab
+```
+
+Backup opcional antes do deploy: `tar -czf /tmp/pap-3-lab-backup.tgz -C /srv/lm-studios/previews pap-3-calculadora-magica-lab`. Documentar commit em comentário na issue de deploy.
 
 ## GitHub Pages (não usado no Plano B)
 

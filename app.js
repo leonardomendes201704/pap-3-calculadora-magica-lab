@@ -1,6 +1,41 @@
 (function () {
   "use strict";
 
+  const SPLASH_MIN_MS = 3000;
+  const splashEl = document.getElementById("splash");
+  const appMainEl = document.getElementById("app-main");
+  const splashStartedAt = performance.now();
+
+  function dismissSplash() {
+    if (!splashEl || splashEl.dataset.dismissed === "true") return;
+    splashEl.dataset.dismissed = "true";
+    splashEl.classList.add("splash--exit");
+    appMainEl.classList.remove("app--splash-hidden");
+    appMainEl.classList.add("app--splash-enter");
+    appMainEl.removeAttribute("inert");
+
+    const onEnd = () => {
+      splashEl.hidden = true;
+      splashEl.setAttribute("aria-hidden", "true");
+      appMainEl.removeAttribute("aria-hidden");
+    };
+
+    splashEl.addEventListener("transitionend", onEnd, { once: true });
+    setTimeout(onEnd, 900);
+  }
+
+  function scheduleSplashDismiss() {
+    const elapsed = performance.now() - splashStartedAt;
+    const remaining = Math.max(0, SPLASH_MIN_MS - elapsed);
+    window.setTimeout(dismissSplash, remaining);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", scheduleSplashDismiss);
+  } else {
+    scheduleSplashDismiss();
+  }
+
   const SUCCESS_MESSAGES = ["Muito bem!", "Isso aí!", "Boa!"];
   const ERROR_MESSAGE = "Ops! Tenta outra vez";
   const MAX_DISPLAY_DIGITS = 12;
