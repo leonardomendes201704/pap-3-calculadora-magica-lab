@@ -1,0 +1,15 @@
+# PAP-3 lab/staging — static calculadora (Plano B)
+# Copy to VPS (e.g. /etc/caddy/Caddyfile) and set LAB_HOST + SITE_ROOT.
+#
+# Pré-requisitos: DNS A/AAAA apontando para a VPS; portas 80/443 abertas.
+
+{$LAB_HOST} {
+	encode gzip zstd
+	root * {$SITE_ROOT:/var/www/pap-3-calculadora-lab}
+	file_server
+	header {
+		# Lab only — not production
+		X-Robots-Tag "noindex, nofollow"
+		Referrer-Policy "strict-origin-when-cross-origin"
+	}
+}
