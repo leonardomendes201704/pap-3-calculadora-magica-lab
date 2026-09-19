@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Calculadora mágica para crianças — sem login, sem dados pessoais." />
+    <title>Calculadora Mágica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <div class="calc" id="calculator" data-feedback="none" aria-label="Calculadora">
+        <header class="calc__header">
+          <p class="calc__env-badge" aria-label="Ambiente de laboratório">LAB / staging</p>
+          <h1 class="calc__title">☁️ Calculadora Mágica</h1>
+        </header>
+
+        <section class="calc__display-wrap" aria-label="Resultado">
+          <p class="calc__expression" id="expression" aria-hidden="true"></p>
+          <p class="calc__display" id="display" aria-live="polite">0</p>
+        </section>
+
+        <div class="calc__banner" id="banner" role="status" hidden></div>
+
+        <div class="calc__keys" role="group" aria-label="Teclado">
+          <button type="button" class="key key--number" data-action="digit" data-value="7">7</button>
+          <button type="button" class="key key--number" data-action="digit" data-value="8">8</button>
+          <button type="button" class="key key--number" data-action="digit" data-value="9">9</button>
+          <button type="button" class="key key--operator" data-action="operator" data-value="÷">÷</button>
+
+          <button type="button" class="key key--number" data-action="digit" data-value="4">4</button>
+          <button type="button" class="key key--number" data-action="digit" data-value="5">5</button>
+          <button type="button" class="key key--number" data-action="digit" data-value="6">6</button>
+          <button type="button" class="key key--operator" data-action="operator" data-value="×">×</button>
+
+          <button type="button" class="key key--number" data-action="digit" data-value="1">1</button>
+          <button type="button" class="key key--number" data-action="digit" data-value="2">2</button>
+          <button type="button" class="key key--number" data-action="digit" data-value="3">3</button>
+          <button type="button" class="key key--operator" data-action="operator" data-value="−">−</button>
+
+          <button type="button" class="key key--clear" data-action="clear">C</button>
+          <button type="button" class="key key--number" data-action="digit" data-value="0">0</button>
+          <button type="button" class="key key--equals" data-action="equals">=</button>
+          <button type="button" class="key key--operator" data-action="operator" data-value="+">+</button>
+        </div>
+      </div>
+    </main>
+    <script src="app.js" defer></script>
+  </body>
+</html>
